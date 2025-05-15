@@ -1,4 +1,3 @@
-# .github/workflows/job_alert.yml
 name: Job Alert Twice Daily
 
 on:
@@ -22,21 +21,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run script
+      - name: Run job_alert script
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
-        run: |
-          echo "import os" > job_alert.py
-          echo "import requests" >> job_alert.py
-          echo "BOT_TOKEN = os.getenv('BOT_TOKEN')" >> job_alert.py
-          echo "CHAT_ID = os.getenv('CHAT_ID')" >> job_alert.py
-          echo "GOOGLE_SEARCH_LINK = 'https://www.google.com/search?q=(%22Frontend+Developer%22+OR+%22Frontend+Engineer%22)+(%22web3%22+OR+%22blockchain%22)+(%22Remote%22)+(site:greenhouse.io+OR+site:lever.co+OR+site:bamboohr.com+OR+site:workable.com)'" >> job_alert.py
-          echo "message = f'🚨 Web3 Frontend Jobs:\\n{GOOGLE_SEARCH_LINK}'" >> job_alert.py
-          echo "def send_telegram_message():" >> job_alert.py
-          echo "    url = f'https://api.telegram.org/bot{BOT_TOKEN}/sendMessage'" >> job_alert.py
-          echo "    payload = {'chat_id': CHAT_ID, 'text': message}" >> job_alert.py
-          echo "    response = requests.post(url, json=payload)" >> job_alert.py
-          echo "    print('✅ Message sent!' if response.ok else f'❌ Failed: {response.text}')" >> job_alert.py
-          echo "send_telegram_message()" >> job_alert.py
-          python job_alert.py
+        run: python job_alert.py
